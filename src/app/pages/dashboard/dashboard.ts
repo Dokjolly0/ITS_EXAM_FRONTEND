@@ -5,7 +5,7 @@ import { Auth } from '../../services/auth';
 import { HttpClient } from '@angular/common/http';
 import { MaterialModule } from '../../angular-material-module';
 import { User as UserService } from '../../services/user';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',

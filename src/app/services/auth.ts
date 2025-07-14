@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Jwt } from './jwt';
 import { Router } from '@angular/router';
 import { User } from '../interfaces/user';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 export interface UserRegistration {
   // Unique ID
