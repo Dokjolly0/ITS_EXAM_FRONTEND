@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+mat-table {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+mat-header-cell,
+mat-cell {
+  padding: 12px;
+  font-size: 14px;
+}
+
+mat-header-cell {
+  font-weight: bold;
+  background: #e0e0e0;
+}

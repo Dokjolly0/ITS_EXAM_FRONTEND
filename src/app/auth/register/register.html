@@ -1,0 +1,193 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Registrati</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="form-grid">
+          <!-- Nome -->
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Nome</mat-label>
+            <input
+              matInput
+              formControlName="firstName"
+              placeholder="Nome"
+              required
+            />
+            <mat-error
+              *ngIf="registerForm.get('firstName')?.hasError('required') && registerForm.get('firstName')?.touched"
+            >
+              Nome obbligatorio
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Cognome -->
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Cognome</mat-label>
+            <input
+              matInput
+              formControlName="lastName"
+              placeholder="Cognome"
+              required
+            />
+            <mat-error
+              *ngIf="registerForm.get('lastName')?.hasError('required') && registerForm.get('lastName')?.touched"
+            >
+              Cognome obbligatorio
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Email -->
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="username"
+              placeholder="Email"
+              required
+            />
+            <mat-error
+              *ngIf="registerForm.get('username')?.hasError('required') && registerForm.get('username')?.touched"
+            >
+              Email obbligatoria
+            </mat-error>
+            <mat-error
+              *ngIf="registerForm.get('username')?.hasError('email') && registerForm.get('username')?.touched"
+            >
+              Email non valida
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Password -->
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              [type]="hidePassword ? 'password' : 'text'"
+              formControlName="password"
+              placeholder="Password"
+              required
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="togglePasswordVisibility(false)"
+              tabindex="-1"
+              type="button"
+            >
+              <mat-icon
+                >{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon
+              >
+            </button>
+            <mat-error
+              *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched"
+            >
+              Password obbligatoria
+            </mat-error>
+            <mat-error
+              *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched"
+            >
+              Minimo {{
+              registerForm.get('password')?.errors?.['minlength']?.requiredLength
+              }} caratteri richiesti
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Conferma Password -->
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Conferma Password</mat-label>
+            <input
+              matInput
+              [type]="hideConfirmPassword ? 'password' : 'text'"
+              formControlName="checkpassword"
+              placeholder="Check password"
+              required
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="togglePasswordVisibility(true)"
+              tabindex="-1"
+              type="button"
+            >
+              <mat-icon
+                >{{ hideConfirmPassword ? 'visibility_off' : 'visibility'
+                }}</mat-icon
+              >
+            </button>
+            <mat-error
+              *ngIf="registerForm.get('checkpassword')?.hasError('required') && registerForm.get('checkpassword')?.touched"
+            >
+              Conferma password obbligatoria
+            </mat-error>
+            <mat-error
+              *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('checkpassword')?.touched"
+            >
+              Le password non corrispondono
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="full-width"
+        >
+          Registrati
+        </button>
+
+        <div class="auth-options">
+          <a
+            routerLink="/login"
+            mat-stroked-button
+            color="accent"
+            class="full-width"
+          >
+            Hai già un account? Accedi
+          </a>
+
+          <div
+            class="divider"
+            *ngIf="oauth.showGoogleAuth || oauth.showGitHubAuth"
+          >
+            <span>oppure</span>
+          </div>
+
+          <div
+            class="auth-button-group"
+            [ngClass]="{
+              'single': oauth.showGoogleAuth !== oauth.showGitHubAuth,
+              'double': oauth.showGoogleAuth && oauth.showGitHubAuth
+            }"
+          >
+            <button
+              *ngIf="oauth.showGoogleAuth"
+              mat-stroked-button
+              color="warn"
+              class="auth-btn"
+              (click)="oauth.autenticateWithGoogle()"
+            >
+              <span [innerHTML]="oauth.googleSVG(24)"></span>
+              Accedi con Google
+            </button>
+
+            <button
+              *ngIf="oauth.showGitHubAuth"
+              mat-stroked-button
+              color="accent"
+              class="auth-btn"
+              (click)="oauth.autenticateWithGithub()"
+            >
+              <span [innerHTML]="oauth.gitHubSVG(24)"></span>
+              Accedi con GitHub
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

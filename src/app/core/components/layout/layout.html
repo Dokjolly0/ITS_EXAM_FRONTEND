@@ -1,0 +1,28 @@
+<mat-sidenav-container class="layout-container">
+  <mat-sidenav mode="side" opened class="layout-sidenav mat-elevation-z4">
+    <div class="sidenav-header">
+      <span class="title" routerLink="/">Nome App</span>
+    </div>
+
+    <mat-divider class="sidenav-divider"></mat-divider>
+
+    <nav>
+      <a mat-button routerLink="/dashboard" routerLinkActive="active">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+    </nav>
+
+    <mat-divider class="sidenav-divider"></mat-divider>
+
+    <button mat-stroked-button color="warn" class="logout" (click)="logout()">
+      Logout
+    </button>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <main class="layout-main">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
