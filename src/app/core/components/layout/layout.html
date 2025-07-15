@@ -23,6 +23,16 @@
         <span>Le mie richieste</span>
       </a>
 
+      <a
+        mat-button
+        routerLink="/my-requests"
+        routerLinkActive="active"
+        *ngIf="isAdmin"
+      >
+        <mat-icon>list_alt</mat-icon>
+        <span>Tutte le richieste</span>
+      </a>
+
       <!-- SOLO ADMIN -->
       <a
         mat-button

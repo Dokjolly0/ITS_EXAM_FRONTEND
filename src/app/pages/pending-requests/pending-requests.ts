@@ -4,6 +4,7 @@ import { RequestsService } from '../../services/requests';
 import { StandardModule } from '../../standard-module';
 import { MaterialModule } from '../../angular-material-module';
 import { Auth } from '../../services/auth';
+import { User as UserSrv } from '../../services/user';
 
 @Component({
   selector: 'app-pending-requests',
@@ -15,15 +16,41 @@ export class PendingRequests {
   private requestsService = inject(RequestsService);
   private snackbar = inject(MatSnackBar);
   private authSrv = inject(Auth);
+  private userService = inject(UserSrv);
 
   adminId: string = '';
   requests: any[] = [];
   isLoading = true;
+  userMap = new Map<string, string>();
+
+  getFullName(userId: string): string {
+    return this.userMap.get(userId) || userId;
+  }
 
   async ngOnInit() {
     const user = await this.authSrv.fetchUser();
     this.adminId = user!.id!;
-    this.loadPending();
+
+    // 🔽 carica utenti solo per admin
+    this.userService.getAll().subscribe({
+      next: (users) => {
+        this.userMap = new Map(
+          users.map((u) => [u.id!, `${u.firstName} ${u.lastName}`])
+        );
+        this.loadPending();
+      },
+      error: (err) => {
+        this.snackbar.open('Errore nel caricamento utenti', 'Chiudi', {
+          duration: 3000,
+        });
+        this.loadPending(); // comunque carica le richieste
+      },
+    });
+    console.log('UserMap:', this.userMap);
+    console.log(
+      'Request userId:',
+      this.requests.map((r) => r.userId)
+    );
   }
 
   loadPending() {

@@ -1,20 +1,25 @@
-table {
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.styled-table {
   width: 100%;
   margin-top: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 th,
 td {
   text-align: left;
+  padding: 1rem;
+  vertical-align: middle;
 }
 
 mat-icon {
   vertical-align: middle;
-}
-
-.title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-right: 0.5rem;
 }
 
 .empty-message {
@@ -25,4 +30,52 @@ mat-icon {
   max-width: 600px;
   margin: 2rem auto;
   text-align: center;
+  font-style: italic;
+  color: #666;
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+
+.styled-table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+}
+
+mat-icon {
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.empty-message {
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border-radius: 16px;
+  max-width: 600px;
+  margin: 2rem auto;
+  text-align: center;
+  font-style: italic;
+  color: #666;
 }

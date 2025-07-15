@@ -87,7 +87,7 @@ export class Login {
           this.snackBar.open('Login effettuato con successo!', 'Chiudi', {
             duration: 3000,
           });
-          this.router.navigate(['/']);
+          this.router.navigate(['/dashboard']);
         });
     } else {
       this.snackBar.open('Compila tutti i campi obbligatori', 'Chiudi', {
