@@ -19,7 +19,7 @@
         *ngIf="user.role !== 'admin'"
         mat-raised-button
         color="primary"
-        routerLink="/requests/new"
+        (click)="openAddDialog()"
       >
         Nuova richiesta
       </button>
@@ -28,7 +28,7 @@
         *ngIf="user.role !== 'admin'"
         mat-stroked-button
         color="accent"
-        routerLink="my-requests"
+        routerLink="/my-requests"
       >
         Le mie richieste
       </button>

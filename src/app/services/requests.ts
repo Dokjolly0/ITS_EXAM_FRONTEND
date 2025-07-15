@@ -36,12 +36,16 @@ export class RequestsService {
     return this.http.get<Request[]>(`${this.base}/to-approve`);
   }
 
-  approve(id: string): Observable<Request> {
-    return this.http.post<Request>(`${this.base}/${id}/approve`, {});
+  approve(id: string, adminId: string): Observable<Request> {
+    return this.http.post<Request>(`${this.base}/${id}/approve`, {
+      approvedBy: adminId,
+    });
   }
 
-  reject(id: string): Observable<Request> {
-    return this.http.post<Request>(`${this.base}/${id}/reject`, {});
+  reject(id: string, adminId: string): Observable<Request> {
+    return this.http.post<Request>(`${this.base}/${id}/reject`, {
+      approvedBy: adminId,
+    });
   }
 
   getStats(month?: string, categoryId?: string): Observable<any[]> {

@@ -1,0 +1,77 @@
+<mat-card>
+  <mat-card-title>Statistiche richieste approvate</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="fetchStats()" class="form-filters">
+      <mat-form-field appearance="outline">
+        <mat-label>Mese</mat-label>
+        <input
+          matInput
+          [matDatepicker]="monthPicker"
+          formControlName="month"
+          placeholder="Seleziona mese"
+          title="Seleziona mese"
+        />
+        <mat-datepicker
+          #monthPicker
+          startView="multi-year"
+          (monthSelected)="form.get('month')?.setValue($event); monthPicker.close()"
+          panelClass="month-picker"
+        ></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="categoryId">
+          <mat-option [value]="''">Tutte</mat-option>
+          <mat-option *ngFor="let cat of categories" [value]="cat.id">
+            {{ cat.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="submit">
+        Applica filtri
+      </button>
+    </form>
+
+    <table
+      mat-table
+      [dataSource]="stats"
+      class="mat-elevation-z1"
+      *ngIf="!isLoading && stats.length"
+    >
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td mat-cell *matCellDef="let s">{{ formatMonth(s.date) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef>Categoria</th>
+        <td mat-cell *matCellDef="let s">{{ getCategoryName(s.category) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="requestsCount">
+        <th mat-header-cell *matHeaderCellDef>Numero richieste</th>
+        <td mat-cell *matCellDef="let s">{{ s.requestsCount }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalPrice">
+        <th mat-header-cell *matHeaderCellDef>Costo totale</th>
+        <td mat-cell *matCellDef="let s">€{{ s.totalPrice }}</td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="['date', 'category', 'requestsCount', 'totalPrice']"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: ['date', 'category', 'requestsCount', 'totalPrice']"
+      ></tr>
+    </table>
+
+    <div *ngIf="!isLoading && !stats.length" class="empty-message">
+      Nessun dato disponibile per i filtri selezionati.
+    </div>
+  </mat-card-content>
+</mat-card>

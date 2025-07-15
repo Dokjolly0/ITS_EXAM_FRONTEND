@@ -1,0 +1,28 @@
+table {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+th,
+td {
+  text-align: left;
+}
+
+mat-icon {
+  vertical-align: middle;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.empty-message {
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border-radius: 2rem;
+  max-width: 600px;
+  margin: 2rem auto;
+  text-align: center;
+}

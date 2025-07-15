@@ -1,0 +1,13 @@
+.full-width {
+  width: 15vw;
+}
+
+.form-section {
+  margin-bottom: 1.5rem;
+}
+
+.form-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}

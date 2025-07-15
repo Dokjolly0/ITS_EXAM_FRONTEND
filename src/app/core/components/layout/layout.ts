@@ -5,6 +5,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MaterialModule } from '../../../angular-material-module';
 import { RouterOutlet } from '@angular/router';
 import { StandardModule } from '../../../standard-module';
+import { User } from '../../../interfaces/user';
 
 @Component({
   selector: 'app-layout',
@@ -14,6 +15,14 @@ import { StandardModule } from '../../../standard-module';
 })
 export class Layout {
   private authSrv = inject(AuthSrv);
+  user: User | null = null;
+  isAdmin: boolean = false;
+
+  async ngOnInit() {
+    this.user = await this.authSrv.fetchUser();
+    this.isAdmin = this.user?.role === 'admin';
+  }
+
   logout() {
     this.authSrv.logout();
   }

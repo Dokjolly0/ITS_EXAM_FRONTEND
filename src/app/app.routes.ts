@@ -17,6 +17,25 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/my-requests/my-requests').then((m) => m.MyRequests),
       },
+      {
+        path: 'requests/to-approve',
+        loadComponent: () =>
+          import('./pages/pending-requests/pending-requests').then(
+            (m) => m.PendingRequests
+          ),
+        canActivate: [authGuard],
+      },
+      {
+        path: 'categories',
+        loadComponent: () =>
+          import('./pages/categories/categories').then((m) => m.Categories),
+        canActivate: [authGuard], // se hai adminGuard, aggiungilo
+      },
+      {
+        path: 'stats',
+        loadComponent: () => import('./pages/stats/stats').then((m) => m.Stats),
+        canActivate: [authGuard], // + eventuale adminGuard
+      },
     ],
   },
   { path: 'login', component: Login },
