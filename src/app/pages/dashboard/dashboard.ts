@@ -1,15 +1,17 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-
-import { Auth } from '../../services/auth';
-import { HttpClient } from '@angular/common/http';
 import { MaterialModule } from '../../angular-material-module';
+import { Auth } from '../../services/auth';
 import { User as UserService } from '../../services/user';
-import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { User } from '../../interfaces/user';
+import { MatDialog } from '@angular/material/dialog';
+import { AddRequestDialog } from '../../dialogs/add-request-dialog/add-request-dialog';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, AsyncPipe, MaterialModule],
+  standalone: true,
+  imports: [CommonModule, MaterialModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -18,26 +20,15 @@ export class Dashboard {
   private authSrv = inject(Auth);
   private http = inject(HttpClient);
 
-  user$ = this.userService.getCurrentUser();
-  user: any;
+  user: null | User = null;
+  currentUser$ = this.authSrv.currentUser$; // Observable<User | null>
+  isAdmin: boolean = false;
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.user = await this.authSrv.fetchUser();
-  }
-
-  joinTournament() {
-    this.http
-      .post(`${environment.apiUrl}/users/tournament/join`, {})
-      .subscribe({
-        next: () => window.location.reload(),
-      });
-  }
-
-  becomeOrganizer() {
-    this.http
-      .post(`${environment.apiUrl}/users/tournament/become-organizer`, {})
-      .subscribe({
-        next: () => window.location.reload(),
-      });
+    if (this.user) {
+      this.isAdmin = this.user.role === 'admin';
+    }
+    console.log('Dashboard initialized', this.user);
   }
 }

@@ -16,6 +16,4 @@ export interface User {
   lastLogin?: Date | string | undefined;
   lastAllowedIp?: string | undefined;
   allowedIps?: string[] | undefined;
-
-  isTournamentParticipant?: boolean;
 }

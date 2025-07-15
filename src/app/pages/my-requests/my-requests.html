@@ -1,0 +1,73 @@
+<mat-card>
+  <mat-card-title>Le mie richieste</mat-card-title>
+  <mat-card-content>
+    <!-- 🔽 Bottone per creare una nuova richiesta -->
+    <div class="action-bar">
+      <button mat-raised-button color="primary" (click)="openAddDialog()">
+        <mat-icon>add</mat-icon>
+        Nuova richiesta
+      </button>
+    </div>
+
+    <div *ngIf="isLoading">Caricamento...</div>
+
+    <table
+      mat-table
+      [dataSource]="requests"
+      class="mat-elevation-z2"
+      *ngIf="!isLoading"
+    >
+      <!-- colonne: object, quantity, price, state, actions (già correttamente configurate) -->
+      <ng-container matColumnDef="object">
+        <th mat-header-cell *matHeaderCellDef>Oggetto</th>
+        <td mat-cell *matCellDef="let r">{{ r.object }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Quantità</th>
+        <td mat-cell *matCellDef="let r">{{ r.quantity }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Prezzo</th>
+        <td mat-cell *matCellDef="let r">€{{ r.price }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef>Stato</th>
+        <td mat-cell *matCellDef="let r">{{ r.state | titlecase }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Azioni</th>
+        <td mat-cell *matCellDef="let r">
+          <button
+            mat-icon-button
+            color="primary"
+            *ngIf="canEditOrDelete(r)"
+            (click)="editRequest(r)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            *ngIf="canEditOrDelete(r)"
+            (click)="deleteRequest(r.id)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="['object', 'quantity', 'price', 'state', 'actions']"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: ['object', 'quantity', 'price', 'state', 'actions']"
+      ></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

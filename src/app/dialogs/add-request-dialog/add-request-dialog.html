@@ -1,0 +1,89 @@
+<h2 mat-dialog-title>Nuova richiesta</h2>
+
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Categoria</mat-label>
+    <mat-select formControlName="categoryId">
+      <mat-option *ngFor="let cat of categories" [value]="cat.id"
+        >{{ cat.description }}</mat-option
+      >
+    </mat-select>
+    <mat-error *ngIf="form.get('categoryId')?.invalid"
+      >è obbligatorio selezionare una categoria</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Oggetto</mat-label>
+    <input matInput formControlName="object" placeholder="Oggetto" />
+    <mat-error *ngIf="form.get('object')?.invalid">Obbligatorio</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Quantità</mat-label>
+    <input
+      matInput
+      type="number"
+      formControlName="quantity"
+      placeholder="Quantita"
+    />
+    <mat-error *ngIf="form.get('quantity')?.hasError('required')">
+      La quantita è obbligatoria
+    </mat-error>
+    <mat-error *ngIf="form.get('quantity')?.hasError('min')">
+      Deve essere almeno 1
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Prezzo</mat-label>
+    <input
+      matInput
+      type="number"
+      formControlName="price"
+      placeholder="Prezzo"
+    />
+
+    <mat-error
+      *ngIf="
+      form.get('price')?.hasError('required') &&
+      (form.get('price')?.touched || form.get('price')?.dirty)
+    "
+    >
+      Il prezzo è obbligatorio
+    </mat-error>
+
+    <mat-error
+      *ngIf="
+      form.get('price')?.hasError('min') &&
+      (form.get('price')?.touched || form.get('price')?.dirty)
+    "
+    >
+      Il prezzo non può essere negativo o zero
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Motivazione</mat-label>
+    <textarea
+      matInput
+      formControlName="motivation"
+      placeholder="Motivazione"
+    ></textarea>
+    <mat-error *ngIf="form.get('motivation')?.invalid"
+      >La motivazione è obbligatoria</mat-error
+    >
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Annulla</button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="save()"
+    [disabled]="isLoading || form.invalid"
+  >
+    Salva
+  </button>
+</mat-dialog-actions>

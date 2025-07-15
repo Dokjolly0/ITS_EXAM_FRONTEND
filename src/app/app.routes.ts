@@ -12,7 +12,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
-      // Aggiungi qui altri elementi alla sidebar
+      {
+        path: 'my-requests',
+        loadComponent: () =>
+          import('./pages/my-requests/my-requests').then((m) => m.MyRequests),
+      },
     ],
   },
   { path: 'login', component: Login },

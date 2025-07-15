@@ -14,9 +14,6 @@ export interface UserRegistration {
   lastName: string;
   username: string;
   password: string;
-  picture?: string;
-  birthDate?: Date | string | undefined;
-  gender?: string | undefined;
 }
 
 @Injectable({
@@ -65,7 +62,11 @@ export class Auth {
     return firstValueFrom(
       this.http.get<User>(`${this.apiUrl}/users/me`).pipe(
         tap((user) => this._currentUser$.next(user)),
-        map((user) => user)
+        map((user) => user),
+        map((user) => {
+          console.log('Fetched user:', user);
+          return user;
+        })
       )
     ).catch((_err) => {
       this._currentUser$.next(null);

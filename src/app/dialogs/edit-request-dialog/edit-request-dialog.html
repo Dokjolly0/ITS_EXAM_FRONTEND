@@ -1,0 +1,80 @@
+<h2 mat-dialog-title>Modifica richiesta</h2>
+
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Oggetto</mat-label>
+    <input matInput formControlName="object" placeholder="Oggetto" />
+    <mat-error *ngIf="form.get('object')?.invalid"
+      >Campo obbligatorio</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Quantità</mat-label>
+    <input
+      matInput
+      type="number"
+      formControlName="quantity"
+      placeholder="Quantita"
+    />
+    <mat-error *ngIf="form.get('quantity')?.hasError('required')">
+      Obbligatorio
+    </mat-error>
+    <mat-error *ngIf="form.get('quantity')?.hasError('min')">
+      Deve essere almeno 1
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Prezzo</mat-label>
+    <input
+      matInput
+      type="number"
+      formControlName="price"
+      placeholder="Prezzo"
+    />
+
+    <mat-error
+      *ngIf="
+      form.get('price')?.hasError('required') &&
+      (form.get('price')?.touched || form.get('price')?.dirty)
+    "
+    >
+      Obbligatorio
+    </mat-error>
+
+    <mat-error
+      *ngIf="
+      form.get('price')?.hasError('min') &&
+      (form.get('price')?.touched || form.get('price')?.dirty)
+    "
+    >
+      Il prezzo non può essere negativo o zero
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Motivazione</mat-label>
+    <textarea
+      matInput
+      formControlName="motivation"
+      placeholder="Inserisci la motivazione"
+      title="Motivazione"
+    ></textarea>
+    <mat-error *ngIf="form.get('motivation')?.invalid"
+      >Campo obbligatorio</mat-error
+    >
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Annulla</button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="save()"
+    [disabled]="isLoading || form.invalid"
+  >
+    Salva
+  </button>
+</mat-dialog-actions>
